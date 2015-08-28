@@ -3,7 +3,7 @@
 //Settings
 $pathToDB     = __DIR__.'/DB/';
 $ext          = '.dat';
-$crypt        = $DBencryptionKey; //16/24/32 Char long key
+$crypt        = '1234567812345678'; //16/24/32 Char long key
 $cryptEnabled = true;
 //
 //Clean path input because its dirty
