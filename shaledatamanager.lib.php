@@ -1,5 +1,5 @@
 <?php
-// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.5 // Unix Safe // Collision Safe //
+// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.6 // Unix Safe // Collision Safe //
 //Settings
 $pathToDB     = __DIR__.'/DB/';
 $ext          = '.dat';
@@ -123,8 +123,7 @@ function encrypt($data, $key)
 //
 function decrypt($data, $key)
 {
-    global $cryptEnabled;
-    if($cryptEnabled)
+    if(base64_decode($data, true))
     {
         $data = base64_decode($data);
         $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
