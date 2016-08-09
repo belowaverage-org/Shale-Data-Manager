@@ -1,5 +1,5 @@
 <?php
-// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.6 // Unix Safe // Collision Safe //
+// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.7 // Unix Safe // Collision Safe //
 //Settings
 $pathToDB     = __DIR__.'/DB/';
 $ext          = '.dat';
@@ -24,19 +24,15 @@ function loadDB($path)
     global $crypt;
     if(file_exists($pathToDB.$path.$ext))
     {
-        $file = fopen($pathToDB.$path.$ext, "r"); //File Path Open
         $locked = true;
         while($locked)
         {
-            if(flock($file, LOCK_SH)) //If can lock read.
+            $file = @fopen($pathToDB.$path.$ext, "r"); //File Path Open
+            if(@flock($file, LOCK_SH)) //If can lock read.
             {
                 $data = json_decode(decrypt(@file_get_contents($pathToDB.$path.$ext), $crypt), true);
                 flock($file, LOCK_UN);
                 $locked = false;
-            }
-            else
-            {
-                $locked = true;
             }
         }
         fclose($file);
@@ -58,13 +54,18 @@ function putDB($arraydata, $path)
     if(file_exists($pathToDB.$path.$ext))
     {
         global $DBencryptionKey;
-        $file = fopen($pathToDB.$path.$ext, "c"); //File Path Open
-        if(flock($file, LOCK_EX)) //If can lock write
+        $locked = true;
+        while($locked)
         {
-            ftruncate($file, 0);
-            fwrite($file, encrypt(json_encode($arraydata),$crypt));
-            fflush($file);
-            flock($file, LOCK_UN);
+            $file = @fopen($pathToDB.$path.$ext, "c"); //File Path Open
+            if(@flock($file, LOCK_EX)) //If can lock write
+            {
+                $locked = false;
+                ftruncate($file, 0);
+                fwrite($file, encrypt(json_encode($arraydata),$crypt));
+                fflush($file);
+                flock($file, LOCK_UN);
+            }
         }
         fclose($file);
         return true;
@@ -99,12 +100,6 @@ function listDB($path)
     return $glob;
 }
 //
-//Future functions
-//cleanDB(); procedure to scan the whole database and remove whitespace and empty folders
-//
-//backupDB(); procedure to scan the whole database, and back it up in a zip file with the date stamped on it.
-//
-//restorebackupDB($date); procedure to find the latest backup, if $date is not given, and restore it.
 //Encryption Functionality
 function encrypt($data, $key)
 {
