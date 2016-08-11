@@ -3,7 +3,7 @@
 Shale Data Manager is an array storage system using flat file storage. Shale works in layers.
 
 ### Version
-1.5.6
+1.5.7
 
 ### Functions
 
