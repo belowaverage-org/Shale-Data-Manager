@@ -2,9 +2,6 @@
 
 Shale Data Manager is an array storage system using flat file storage. Shale works in layers.
 
-### Version
-1.5.7
-
 ### Features
 * **High performance** Shale writes to the local file system, not a SQL or equivielent server. Instead of depending on the latency of TCP/IP and then the latency of the database software, shale depends on the host OS's file system.
 * **Collision Safe** Shale will lock files using native PHP functions, and will wait for a file to be released before writing/reading. Since PHP will obey the lock, any functions trying to read any locked database file will fail. This lock works across all PHP processes.
