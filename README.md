@@ -10,7 +10,7 @@ Shale Data Manager is an array storage system using flat file storage. Shale wor
 
 ### Functions
 
-* **Array** = loadDB(**String** *location*) - Loads an array from a location *See more about location sytax below*.
+* **Array** = loadDB(**String** *location*) - Loads an array from a location *See more about location syntax below*.
 * **Array** = listDB(**String** *location*) - Lists all databases inside a location.
 * **Boolean** = putDB(**Array** *Data*, **String** *location*) - Saves array into a location. Returns true if successful.
 * **Boolean** = dropDB(**String** *location*) - Deletes a database from a location. Returns true if successful.
