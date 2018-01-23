@@ -1,5 +1,5 @@
 <?php
-// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.8 // Unix Safe // Collision Safe //
+// Below Average //Shale Data Manager JSON // Krisdb2009 // 1.5.9 // Unix Safe // Collision Safe // Permissions Safe //
 //Settings
 $pathToDB     = __DIR__.'/DB/';
 $ext          = '.dat';
@@ -49,6 +49,7 @@ function putDB($arraydata, $path) {
     if(file_exists($pathToDB.$path.$ext)) {
         global $DBencryptionKey;
         $locked = true;
+        set_time_limit(1);
         while($locked) {
             $file = @fopen($pathToDB.$path.$ext, "c"); //File Path Open
             if(@flock($file, LOCK_EX)) { //If can lock write
